@@ -1,0 +1,84 @@
+.header{
+    text-align: center;
+    margin-top: 1rem; 
+    font-size: 5rem;
+}
+.logo{
+    vertical-align:unset;
+    margin-left: 10.3rem; 
+    position: absolute;
+    margin-top: -6rem;
+}
+.sub-header{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.msg{
+    width: 50%; 
+}
+p{
+    margin-bottom: 0rem !important;
+}
+#src{
+    font-size:1.5rem;
+    margin-right: 34rem !important;
+}
+#to{
+    position: absolute;
+    font-size: 1.5rem;
+    margin-top: -32px;
+    margin-left: 2rem;
+}
+.lang{
+    width: 19%;
+    position: absolute;
+    margin-top: -1.8rem;
+    margin-left: 47.7rem;
+}
+.trans-btn{
+    margin-top: 1rem !important;
+}
+
+@media (max-width:768px){
+    .header{
+        text-align: center;
+        margin-top: 2rem;
+        margin-right: 2rem;
+        font-size: 3rem;
+    }
+    .logo{
+        vertical-align: unset;
+        margin-left: 5.3rem;
+        position: absolute;
+        width: 12%;
+        margin-top: -62.2px;
+    }
+    .sub-header{
+        font-size: 2rem;
+    }
+    .msg{
+        width: 75%; 
+    }
+    .lang{
+        width: 41%;
+        position: absolute;
+        margin-top: 1.6rem !important;
+        margin-left: 12rem;
+    }
+    #src{
+        margin-left: 3.4rem;
+        font-size: 1rem;
+        position: absolute;
+    }
+    #to{
+        font-size: 1rem;
+        margin-top: 1px;
+        margin-left: -1rem;
+    }
+    .trans-btn{
+        margin-top: 2rem !important;
+    }
+    .transed{
+        margin-top: 4rem;
+    }
+}

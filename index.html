@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet"></link>
+    <title>Detect & Translate language</title>
+    </head>
+    <body>
+
+        <center>
+            <h1 class="header">Hadef IT </h1>
+            <img class="logo" src="logo.jpeg" width="6%">
+
+            <h2 class="sub-header">Detect language</h2>
+            <form  id="form" method="POST">
+                <input name="msg" id="msg" class="msg form-control form-control-lg"  />
+                <br>
+                <p id="info" style="color: red; font-size:1.5rem"></p>
+                <input id="submit" name="submit" type="submit" style="margin-top: 0.5rem; border-radius: 4rem; width: 6.5rem;" class="btn btn-success" value="Send">
+            </form>
+
+            <div id="trans-class" style="display: none;">
+                <h2 class="sub-header">Translate Message</h2>
+                <form  id="form2" class="form2" method="POST">
+                    <input name="trans" id="trans" class="msg form-control form-control-lg" />
+                    <p id="src"></p> 
+                    <span>
+                        <span id="to"> To : </span>
+                        <select class="form-select lang" id="tar" aria-label="Default select example">
+                            <option selected>Language</option>
+                            <option value="ar">Arabic</option>
+                            <option value="en">English</option>
+                            <option value="es">Spanish</option>
+                            <option value="de">Germany</option>
+                        </select>
+                    </span>
+                    <br>
+                    <input name="transed" id="transed" class="transed msg form-control form-control-lg"  readonly/>
+                    <input id="trans-btn" name="trans-btn" type="submit" style="border-radius: 4rem; width: 6.5rem;" class="trans-btn btn btn-success" value="Translate">
+                </form>
+            </div>
+
+        </center>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+                $("form").submit(function (event) {
+                    var msg = document.getElementById('msg').value;
+                    var formData = {
+                        msg: msg,
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost/languageRecognizer/detectLang.php",
+                        data: formData,
+                        dataType: "json",
+                        encode: true,
+                    })
+                    .done(function (data) 
+                    {
+                        if(data.flag == '1')
+                        {
+                            console.log("flag: "+data.flag);
+                            console.log("msg: "+data.msg);
+                            console.log("lang: "+data.lang);
+                            document.getElementById('info').innerHTML = "Language : " +data.lang;
+                             /****               Start Translate                             *****/
+                            document.getElementById('trans-class').style.display = 'block';
+                            document.getElementById('src').innerHTML = "From : "+data.lang;
+                            document.getElementById('trans').value = data.msg;
+
+                            $(".form2").submit(function (event) {
+                                var trans = data.msg;
+                                var tar = document.getElementById('tar').value;
+                                var src = data.src;
+                                var formData = {
+                                src: src,
+                                tar: tar,
+                                trans: trans,
+                                };
+                                $.ajax({
+                                    type: "POST",
+                                    url: "http://localhost/languageRecognizer/transLang.php",
+                                    data: formData,
+                                    dataType: "json",
+                                    encode: true,
+                                })
+                                .done(function (result) {
+                                    console.log(result);
+                                    document.getElementById('transed').value = result.trans;
+                                });
+                                event.preventDefault();
+                            });
+ 
+                        }
+                        else{
+                            console.log("msg: "+data.msg);
+                            document.getElementById('info').innerHTML = "Error Language "+data.lang
+                        }
+
+                    });
+                    event.preventDefault();
+                });
+            });
+            
+        </script>
+    </body>
+</html>
