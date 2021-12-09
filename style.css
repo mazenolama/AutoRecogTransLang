@@ -1,3 +1,7 @@
+center{
+    height: 55vw;
+    margin-top: 2rem;
+}
 .header{
     text-align: center;
     margin-top: 1rem; 
@@ -16,24 +20,25 @@
 .msg{
     width: 50%; 
 }
-p{
-    margin-bottom: 0rem !important;
+#cont{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 #src{
     font-size:1.5rem;
-    margin-right: 34rem !important;
 }
 #to{
-    position: absolute;
-    font-size: 1.5rem;
-    margin-top: -32px;
-    margin-left: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 1.3rem;
 }
 .lang{
-    width: 19%;
-    position: absolute;
-    margin-top: -1.8rem;
-    margin-left: 47.7rem;
+    width: auto;
+    margin-left: 1rem;
 }
 .trans-btn{
     margin-top: 1rem !important;

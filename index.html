@@ -26,17 +26,19 @@
                 <h2 class="sub-header">Translate Message</h2>
                 <form  id="form2" class="form2" method="POST">
                     <input name="trans" id="trans" class="msg form-control form-control-lg" />
-                    <p id="src"></p> 
-                    <span>
-                        <span id="to"> To : </span>
-                        <select class="form-select lang" id="tar" aria-label="Default select example">
-                            <option selected>Language</option>
-                            <option value="ar">Arabic</option>
-                            <option value="en">English</option>
-                            <option value="es">Spanish</option>
-                            <option value="de">Germany</option>
-                        </select>
-                    </span>
+                    <div id="cont">
+                        <p id="src"></p> 
+                        <span id="to">
+                            <span > To : </span>
+                            <select class="form-select lang" id="tar" aria-label="Default select example">
+                                <option selected>Language</option>
+                                <option value="ar">Arabic</option>
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                                <option value="de">Germany</option>
+                            </select>
+                        </span>
+                    </div>
                     <br>
                     <input name="transed" id="transed" class="transed msg form-control form-control-lg"  readonly/>
                     <input id="trans-btn" name="trans-btn" type="submit" style="border-radius: 4rem; width: 6.5rem;" class="trans-btn btn btn-success" value="Translate">
@@ -56,7 +58,7 @@
                     };
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost/languageRecognizer/detectLang.php",
+                        url: "./detectLang.php",
                         data: formData,
                         dataType: "json",
                         encode: true,
@@ -68,8 +70,9 @@
                             console.log("flag: "+data.flag);
                             console.log("msg: "+data.msg);
                             console.log("lang: "+data.lang);
-                            document.getElementById('info').innerHTML = "Language : " +data.lang;
-                             /****               Start Translate                             *****/
+                            document.getElementById('info').innerHTML = data.local + ", " + data.lang;
+                             
+                            /****               Start Translate                             *****/
                             document.getElementById('trans-class').style.display = 'block';
                             document.getElementById('src').innerHTML = "From : "+data.lang;
                             document.getElementById('trans').value = data.msg;
@@ -77,7 +80,7 @@
                             $(".form2").submit(function (event) {
                                 var trans = data.msg;
                                 var tar = document.getElementById('tar').value;
-                                var src = data.src;
+                                var src = data.code;
                                 var formData = {
                                 src: src,
                                 tar: tar,
@@ -85,7 +88,7 @@
                                 };
                                 $.ajax({
                                     type: "POST",
-                                    url: "http://localhost/languageRecognizer/transLang.php",
+                                    url: "./transLang.php",
                                     data: formData,
                                     dataType: "json",
                                     encode: true,
@@ -100,7 +103,7 @@
                         }
                         else{
                             console.log("msg: "+data.msg);
-                            document.getElementById('info').innerHTML = "Error Language "+data.lang
+                            document.getElementById('info').innerHTML = "Undefined Language, لغة غير معروفة"
                         }
 
                     });
